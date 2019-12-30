@@ -1,0 +1,8 @@
+{
+  "body": "{\"description\":\"Jan-2020 Course\",\"startDate\":\"2020-01-05\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

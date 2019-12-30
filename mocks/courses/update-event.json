@@ -1,0 +1,11 @@
+{
+  "pathParameters": {
+    "id": "02253b50-2af5-11ea-9e4c-13c60ce86446"
+  },
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  },
+  "body": "{\"description\":\"Jan course updated\",\"startDate\":\"2020-01-07\"}"
+}

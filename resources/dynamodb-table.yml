@@ -1,0 +1,32 @@
+Resources:
+  CoursesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.coursesTableName}
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: courseId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: courseId
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+  ApplicationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.applicationsTableName}
+      AttributeDefinitions:
+        - AttributeName: courseId
+          AttributeType: S
+        - AttributeName: applicationId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: courseId
+          KeyType: HASH
+        - AttributeName: applicationId
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
