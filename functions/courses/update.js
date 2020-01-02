@@ -4,10 +4,10 @@ import { success, failure } from "../../libs/response-lib";
 export async function main(event, context) {
   const data = JSON.parse(event.body);
   const params = {
-    TableName: process.env.coursesTableName,
+    TableName: process.env.tableName,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      courseId: event.pathParameters.id
+      sk: `course-${event.pathParameters.id}`
     },
     UpdateExpression: "SET description = :description, startDate = :startDate",
     ExpressionAttributeValues: {

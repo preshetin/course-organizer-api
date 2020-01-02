@@ -3,10 +3,10 @@ import { success, failure } from "../../libs/response-lib";
 
 export async function main(event, context) {
   const params = {
-    TableName: process.env.coursesTableName,
+    TableName: process.env.tableName,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      courseId: event.pathParameters.id
+      sk: `course-${event.pathParameters.id}`
     }
   };
 
@@ -14,7 +14,11 @@ export async function main(event, context) {
     const result = await dynamoDbLib.call("get", params);
     if (result.Item) {
       // Return the retrieved item
-      return success(result.Item);
+      const item = {
+        ...result.Item,
+        courseId: result.Item.sk.substring("course-".length)
+      };
+      return success(item);
     } else {
       return failure({ status: false, error: "Item not found." });
     }

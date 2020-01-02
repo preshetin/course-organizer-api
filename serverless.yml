@@ -14,8 +14,7 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  coursesTableName: ${self:custom.stage}-courses
-  applicationsTableName: ${self:custom.stage}-applications
+  tableName: ${self:custom.stage}-course-organizer
 
 provider:
   name: aws
@@ -26,8 +25,7 @@ provider:
   # These environment variables are made available to our functions
   # under process.env.
   environment:
-    coursesTableName: ${self:custom.coursesTableName}
-    applicationsTableName: ${self:custom.applicationsTableName}
+    tableName: ${self:custom.tableName}
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
@@ -45,16 +43,10 @@ provider:
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
-        - "Fn::GetAtt": [ CoursesTable, Arn ]
-        - "Fn::GetAtt": [ ApplicationsTable, Arn ]
+        - "Fn::GetAtt": [ CourseOrganizerTable, Arn ]
 
 functions:
-  # Defines an HTTP API endpoint that calls the main function in create.js
-  # - path: url path is /notes
-  # - method: POST request
-  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
-  #     domain api call
-  # - authorizer: authenticate using the AWS IAM role
+  # Courses CRUD
   coursesCreate:
     handler: functions/courses/create.main
     events:
@@ -95,7 +87,49 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
-          
+  # coursesApplicationsList:
+  #   handler: functions/courses/applicationsList.main
+  #   events:
+  #     - http:
+  #         path: courses/{id}/applications
+  #         method: get
+  #         cors: true
+  #         authorizer: aws_iam
+
+  # # Applications CRUD
+  # applicationsCreate:
+  #   handler: functions/applications/create.main
+  #   events:
+  #     - http:
+  #         path: courses/{id}/applications
+  #         method: post
+  #         cors: true
+  #         authorizer: aws_iam
+  # applicationsGet:
+  #   handler: functions/applications/get.main
+  #   events:
+  #     - http:
+  #         path: courses/{courseId}/applications/{id}
+  #         method: get
+  #         cors: true
+  #         authorizer: aws_iam
+  # applicationsUpdate:
+  #   handler: functions/applications/update.main
+  #   events:
+  #     - http: 
+  #         path: courses/{courseId}/applications/{id}
+  #         method: put
+  #         cors: true
+  #         authorizer: aws_iam
+  # applicationsDelete:
+  #   handler: functions/applications/delete.main
+  #   events:
+  #     - http:
+  #         path: courses/{courseId}/applications/{id}
+  #         method: delete
+  #         cors: true
+  #         authorizer: aws_iam
+
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors

@@ -5,10 +5,10 @@ import { success, failure } from "../../libs/response-lib";
 export async function main(event, context) {
   const data = JSON.parse(event.body);
   const params = {
-    TableName: process.env.coursesTableName,
+    TableName: process.env.tableName,
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      courseId: uuid.v1(),
+      sk: `course-${uuid.v1()}`,
       description: data.description,
       startDate: data.startDate,
       createdAt: Date.now()
@@ -17,7 +17,11 @@ export async function main(event, context) {
 
   try {
     await dynamoDbLib.call("put", params);
-    return success(params.Item);
+    const item = {
+      ...params.Item,
+      courseId: params.Item.sk.substring('course-'.length)
+    };
+    return success(item);
   } catch (e) {
     return failure({ status: false });
   }

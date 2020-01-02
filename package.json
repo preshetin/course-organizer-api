@@ -1,7 +1,7 @@
 {
-  "name": "notes-app-api",
-  "version": "1.1.1",
-  "description": "A Node.js starter for the Serverless Framework with async/await and unit test support",
+  "name": "course-organizer-api",
+  "version": "0.0.1",
+  "description": "A node.js api for managing applications for courses.",
   "main": "handler.js",
   "scripts": {
     "test": "serverless-bundle test"
