@@ -1,0 +1,11 @@
+{
+  "body": "{\"firstName\":\"Petr\",\"email\":\"petr@applicant.com\"}",
+  "pathParameters": {
+    "id": "2168b5d0-2d77-11ea-b432-8d142575cf19"
+  },
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

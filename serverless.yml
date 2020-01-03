@@ -87,48 +87,48 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
-  # coursesApplicationsList:
-  #   handler: functions/courses/applicationsList.main
-  #   events:
-  #     - http:
-  #         path: courses/{id}/applications
-  #         method: get
-  #         cors: true
-  #         authorizer: aws_iam
 
-  # # Applications CRUD
-  # applicationsCreate:
-  #   handler: functions/applications/create.main
-  #   events:
-  #     - http:
-  #         path: courses/{id}/applications
-  #         method: post
-  #         cors: true
-  #         authorizer: aws_iam
-  # applicationsGet:
-  #   handler: functions/applications/get.main
-  #   events:
-  #     - http:
-  #         path: courses/{courseId}/applications/{id}
-  #         method: get
-  #         cors: true
-  #         authorizer: aws_iam
-  # applicationsUpdate:
-  #   handler: functions/applications/update.main
-  #   events:
-  #     - http: 
-  #         path: courses/{courseId}/applications/{id}
-  #         method: put
-  #         cors: true
-  #         authorizer: aws_iam
-  # applicationsDelete:
-  #   handler: functions/applications/delete.main
-  #   events:
-  #     - http:
-  #         path: courses/{courseId}/applications/{id}
-  #         method: delete
-  #         cors: true
-  #         authorizer: aws_iam
+  # Applications CRUD
+  applicationsCreate:
+    handler: functions/applications/create.main
+    events:
+      - http:
+          path: courses/{id}/applications
+          method: post
+          cors: true
+          authorizer: aws_iam
+  applicationsGet:
+    handler: functions/applications/get.main
+    events:
+      - http:
+          path: courses/{courseId}/applications/{applicationId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+  applicationsList:
+    handler: functions/applications/list.main
+    events:
+      - http:
+          path: courses/{courseId}/applications
+          method: get
+          cors: true
+          authorizer: aws_iam
+  applicationsUpdate:
+    handler: functions/applications/update.main
+    events:
+      - http: 
+          path: courses/{courseId}/applications/{applicationId}
+          method: put
+          cors: true
+          authorizer: aws_iam
+  applicationsDelete:
+    handler: functions/applications/delete.main
+    events:
+      - http:
+          path: courses/{courseId}/applications/{applicationId}
+          method: delete
+          cors: true
+          authorizer: aws_iam
 
 # Create our resources with separate CloudFormation templates
 resources:

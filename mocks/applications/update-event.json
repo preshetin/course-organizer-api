@@ -1,0 +1,12 @@
+{
+  "pathParameters": {
+    "courseId": "2168b5d0-2d77-11ea-b432-8d142575cf19",
+    "applicationId": "5314ca40-2e0f-11ea-b41d-9b7bdd4da9a0"
+  },
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  },
+  "body": "{\"firstName\":\"Peter\",\"email\":\"peter@updatedEmail.com\"}"
+}

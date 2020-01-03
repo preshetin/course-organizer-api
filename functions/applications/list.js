@@ -4,19 +4,19 @@ import { success, failure } from "../../libs/response-lib";
 export async function main(event, context) {
   const params = {
     TableName: process.env.tableName,
-    KeyConditionExpression: "userId = :userId AND begins_with(sk,:coursePrefix)",
+    KeyConditionExpression: "userId = :userId AND begins_with(sk, :skPrefix)",
     ExpressionAttributeValues: {
       ":userId": event.requestContext.identity.cognitoIdentityId,
-      ":coursePrefix": "course-"
+      ":skPrefix": `${event.pathParameters.courseId}#application-`
     }
   };
 
   try {
     const result = await dynamoDbLib.call("query", params);
-    // Return the matching list of items in response body
     const items = result.Items.map(item => ({
       ...item,
-      courseId: item.sk.substring('course-'.length)
+      courseId: item.sk.split('#')[0],
+      applicationId: item.sk.split('#')[1].substring('application-'.length)
     }));
     return success(items);
   } catch (e) {
