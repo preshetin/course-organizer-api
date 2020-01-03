@@ -93,7 +93,7 @@ functions:
     handler: functions/applications/create.main
     events:
       - http:
-          path: courses/{id}/applications
+          path: courses/{courseId}/applications
           method: post
           cors: true
           authorizer: aws_iam

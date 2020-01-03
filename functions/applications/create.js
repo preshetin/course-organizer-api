@@ -9,7 +9,7 @@ export async function main(event, context) {
     Item: {
       ...data,
       userId: event.requestContext.identity.cognitoIdentityId,
-      sk: `${event.pathParameters.id}#application-${uuid.v1()}`,
+      sk: `${event.pathParameters.courseId}#application-${uuid.v1()}`,
       createdAt: Date.now()
     }
   };
