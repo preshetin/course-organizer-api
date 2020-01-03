@@ -59,7 +59,7 @@ functions:
     handler: functions/courses/get.main
     events:
       - http:
-          path: courses/{id}
+          path: courses/{courseId}
           method: get
           cors: true
           authorizer: aws_iam
@@ -75,7 +75,7 @@ functions:
     handler: functions/courses/update.main
     events:
       - http: 
-          path: courses/{id}
+          path: courses/{courseId}
           method: put
           cors: true
           authorizer: aws_iam
@@ -83,7 +83,7 @@ functions:
     handler: functions/courses/delete.main
     events:
       - http:
-          path: courses/{id}
+          path: courses/{courseId}
           method: delete
           cors: true
           authorizer: aws_iam

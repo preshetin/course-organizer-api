@@ -7,7 +7,7 @@ export async function main(event, context) {
     TableName: process.env.tableName,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      sk: `course-${event.pathParameters.id}`
+      sk: `course-${event.pathParameters.courseId}`
     },
     UpdateExpression: "SET description = :description, startDate = :startDate",
     ExpressionAttributeValues: {
