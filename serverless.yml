@@ -97,11 +97,11 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  applicationsCreateAnonymous:
-    handler: functions/applications/createAnonymous.main
+  applyForUpcomingCourse:
+    handler: functions/applications/applyForUpcomingCourse.main
     events:
       - http:
-          path: courses/{courseId}/applicationsAnonymous
+          path: applyForUpcomingCourse
           method: post
   applicationsGet:
     handler: functions/applications/get.main
