@@ -42,6 +42,6 @@ jobs:
         name: Run tests with coverage
         command: yarn test --coverage
 
-    - run:
-        name: Deploy application
-        command: sls deploy --stage dev
+      - run:
+          name: Deploy application
+          command: sls deploy --stage dev
