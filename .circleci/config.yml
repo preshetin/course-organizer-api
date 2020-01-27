@@ -27,10 +27,10 @@ jobs:
             - v1-dependencies-
 
       - run:
-        name: Install Serverless CLI and dependencies
-        command: |
-          sudo npm i -g serverless
-          yarn install
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            yarn install
 
       - save_cache:
           paths:
@@ -39,8 +39,8 @@ jobs:
 
       # run tests!
       - run: 
-        name: Run tests with coverage
-        command: yarn test --coverage
+          name: Run tests with coverage
+          command: yarn test --coverage
 
       - run:
           name: Deploy application
