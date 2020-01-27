@@ -26,7 +26,7 @@ provider:
   # under process.env.
   environment:
     tableName: ${self:custom.tableName}
-    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+    upcomingCourseId: ${env:UPCOMING_COURSE_ID}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.

@@ -5,14 +5,14 @@ import { success, failure } from "../../libs/response-lib";
 export async function main(event, context) {
   const data = JSON.parse(event.body);
 
-  const courseId = '6040d380-40de-11ea-aa37-831e6e8e2845'; // dev, 2 feb one day
+  const upcomingCourseId = process.env.upcomingCourseId;
 
   const params = {
     TableName: process.env.tableName,
     Item: {
       ...data,
       userId: data.userId,
-      sk: `${courseId}#application-${uuid.v1()}`,
+      sk: `${upcomingCourseId}#application-${uuid.v1()}`,
       createdAt: Date.now()
     }
   };
