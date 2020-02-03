@@ -1,0 +1,11 @@
+Resources:
+  CourseOrganizerQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: ${self:custom.queueName}
+
+Outputs: 
+  QueueURL: 
+    Description: "URL of SQS Queue"
+    Value: 
+      Ref: CourseOrganizerQueue

@@ -11,6 +11,7 @@ export async function main(event, context) {
     TableName: process.env.tableName,
     Item: {
       ...data,
+      autoVechileDetails: data.autoVechileDetails || null,  //todo check for empty strings everywhere
       userId: data.userId,
       sk: `${upcomingCourseId}#application-${uuid.v1()}`,
       createdAt: Date.now()
@@ -26,6 +27,7 @@ export async function main(event, context) {
     };
     return success(item);
   } catch (e) {
+    console.log('error', e);
     return failure({ status: false });
   }
 }

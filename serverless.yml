@@ -15,6 +15,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
   tableName: ${self:custom.stage}-course-organizer
+  queueName: ${self:custom.stage}-course-organizer
 
 provider:
   name: aws
@@ -27,6 +28,8 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     upcomingCourseId: ${env:UPCOMING_COURSE_ID}
+    queueUrl: ${env:QUEUE_URL}
+    sendgridApiKey: ${env:SENDGRID_API_KEY}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.
@@ -40,10 +43,15 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      # Restrict our IAM role permissions to
-      # the specific table for the stage
       Resource:
         - "Fn::GetAtt": [ CourseOrganizerTable, Arn ]
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+        - sqs:GetQueueUrl
+        - sqs:ListQueues
+      Resource:
+        - "Fn::GetAtt": [ CourseOrganizerQueue, Arn ]
 
 functions:
   # Courses CRUD
@@ -135,6 +143,15 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
+  processStatusChange:
+    handler: functions/applications/processStatusChange.main
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - CourseOrganizerQueue
+              - Arn 
+          batchSize: 1
 
 # Create our resources with separate CloudFormation templates
 resources:
@@ -142,6 +159,8 @@ resources:
   - ${file(resources/api-gateway-errors.yml)}
   # DynamoDB
   - ${file(resources/dynamodb-table.yml)}
+  # Queue
+  - ${file(resources/sqs-queue.yml)}
   # Cognito
   - ${file(resources/cognito-user-pool.yml)}
   - ${file(resources/cognito-identity-pool.yml)}

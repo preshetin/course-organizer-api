@@ -8,5 +8,5 @@
       "cognitoIdentityId": "USER-SUB-1234"
     }
   },
-  "body": "{\"firstName\":\"Peter\",\"email\":\"peter@updatedEmail.com\"}"
+  "body": "{\"firstName\":\"Peter\",\"email\":\"preshetin@yandex.ru\",\"status\":\"routeSent\"}"
 }

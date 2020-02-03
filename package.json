@@ -4,7 +4,9 @@
   "description": "A node.js api for managing applications for courses.",
   "main": "handler.js",
   "scripts": {
-    "test": "serverless-bundle test"
+    "test": "serverless-bundle test",
+    "lint": "eslint -c node_modules/serverless-bundle/src/eslintrc.json",
+    "lint:fix": "eslint --fix -c node_modules/serverless-bundle/src/eslintrc.json"
   },
   "author": "",
   "license": "MIT",
@@ -20,6 +22,7 @@
     "serverless-offline": "^5.3.3"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "stripe": "^7.14.0",
     "uuid": "^3.3.3"
   }
