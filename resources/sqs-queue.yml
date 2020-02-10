@@ -1,6 +1,7 @@
 Resources:
   CourseOrganizerQueue:
     Type: AWS::SQS::Queue
+    ReceiveMessageWaitTimeSeconds: 20
     Properties:
       QueueName: ${self:custom.queueName}
 
