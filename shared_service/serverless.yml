@@ -1,0 +1,31 @@
+service: course-organizer-shared-resources
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+# you can add CloudFormation resource templates here
+resources:
+  Resources:
+    CourseOrganizerQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: course-organizer
+        ReceiveMessageWaitTimeSeconds: 20
+  
+  Outputs: 
+    QueueURL: 
+      Description: "URL of SQS Queue"
+      Value: 
+        Ref: CourseOrganizerQueue
