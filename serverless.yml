@@ -51,7 +51,14 @@ provider:
         - sqs:GetQueueUrl
         - sqs:ListQueues
       Resource:
-        - "Fn::GetAtt": [ CourseOrganizerQueue, Arn ]
+        - Fn::Join:
+            - ':'
+            - - arn
+              - aws
+              - sqs
+              - Ref: AWS::Region
+              - Ref: AWS::AccountId
+              - ${self:custom.queueName}
 
 functions:
   # Courses CRUD
@@ -147,11 +154,16 @@ functions:
     handler: functions/applications/processStatusChange.main
     events:
       - sqs:
-          arn:
-            Fn::GetAtt:
-              - CourseOrganizerQueue
-              - Arn 
           batchSize: 1
+          arn:
+            Fn::Join:
+              - ':'
+              - - arn
+                - aws
+                - sqs
+                - Ref: AWS::Region
+                - Ref: AWS::AccountId
+                - ${self:custom.queueName}
 
 # Create our resources with separate CloudFormation templates
 resources:
@@ -159,8 +171,7 @@ resources:
   - ${file(resources/api-gateway-errors.yml)}
   # DynamoDB
   - ${file(resources/dynamodb-table.yml)}
-  # Queue
-  - ${file(resources/sqs-queue.yml)}
+  # Queue is createad in shared_service/serverless.yml
   # Cognito
   - ${file(resources/cognito-user-pool.yml)}
   - ${file(resources/cognito-identity-pool.yml)}
